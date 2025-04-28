@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionEndpoints_WorkdaySentinelDCE_name": {
+            "defaultValue": "WorkdaySentinelDCE",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionEndpoints",
+            "apiVersion": "2023-03-11",
+            "name": "[parameters('dataCollectionEndpoints_WorkdaySentinelDCE_name')]",
+            "location": "westus2",
+            "properties": {
+                "immutableId": "dce-c79517e442024cd089eb545ca950d419",
+                "configurationAccess": {},
+                "logsIngestion": {},
+                "metricsIngestion": {},
+                "networkAcls": {
+                    "publicNetworkAccess": "Enabled"
+                }
+            }
+        }
+    ]
+}

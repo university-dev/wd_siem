@@ -1,0 +1,3 @@
+azure-monitor-ingestion
+azure-core
+requests==2.31.0

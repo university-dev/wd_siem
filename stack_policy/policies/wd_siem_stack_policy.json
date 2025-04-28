@@ -1,0 +1,15 @@
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "Update:*",
+      "Principal": "*",
+      "Resource": "*",
+      "AAondition": {
+        "ArnEquals": {
+          "aws:PrincipalArn": "arn:aws:iam::211125451396:role/BitbucketPipeline-IdentityProvider-Role"
+        }
+      }
+    }
+  ]
+}

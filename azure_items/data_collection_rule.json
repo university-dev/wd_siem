@@ -1,0 +1,101 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRules_WorkdaySentinelDCR_name": {
+            "defaultValue": "WorkdaySentinelDCR",
+            "type": "String"
+        },
+        "dataCollectionEndpoints_WorkdaySentinelDCE_externalid": {
+            "defaultValue": "/subscriptions/5c4e45e2-7303-4b67-8685-7e83a73cc358/resourceGroups/Sentinel_rg/providers/Microsoft.Insights/dataCollectionEndpoints/WorkdaySentinelDCE",
+            "type": "String"
+        },
+        "workspaces_sentinel_externalid": {
+            "defaultValue": "/subscriptions/5c4e45e2-7303-4b67-8685-7e83a73cc358/resourceGroups/sentinel_rg/providers/microsoft.operationalinsights/workspaces/sentinel",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2023-03-11",
+            "name": "[parameters('dataCollectionRules_WorkdaySentinelDCR_name')]",
+            "location": "westus2",
+            "properties": {
+                "dataCollectionEndpointId": "[parameters('dataCollectionEndpoints_WorkdaySentinelDCE_externalid')]",
+                "streamDeclarations": {
+                    "Custom-WorkdaySentinel_CL": {
+                        "columns": [
+                            {
+                                "name": "activityAction",
+                                "type": "string"
+                            },
+                            {
+                                "name": "systemAccount",
+                                "type": "string"
+                            },
+                            {
+                                "name": "fullSysAccount",
+                                "type": "string"
+                            },
+                            {
+                                "name": "taskId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "ipAddress",
+                                "type": "string"
+                            },
+                            {
+                                "name": "sessionId",
+                                "type": "string"
+                            },
+                            {
+                                "name": "task",
+                                "type": "string"
+                            },
+                            {
+                                "name": "requestTime",
+                                "type": "datetime"
+                            },
+                            {
+                                "name": "deviceType",
+                                "type": "string"
+                            },
+                            {
+                                "name": "target",
+                                "type": "string"
+                            },
+                            {
+                                "name": "userAgent",
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "dataSources": {},
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('workspaces_sentinel_externalid')]",
+                            "name": "d3b383a375454d5a8d8becd5ec497bc8"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Custom-WorkdaySentinel_CL"
+                        ],
+                        "destinations": [
+                            "d3b383a375454d5a8d8becd5ec497bc8"
+                        ],
+                        "transformKql": "source\n| extend TimeGenerated = todatetime(requestTime)\n",
+                        "outputStream": "Custom-WorkdaySentinel_CL"
+                    }
+                ]
+            }
+        }
+    ]
+}
