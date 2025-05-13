@@ -1,2 +1,2 @@
-pytest==6.2.5
+pytest==8.3.5
 zipp==3.19.1
